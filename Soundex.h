@@ -4,18 +4,13 @@
 #include <ctype.h>
 #include <string.h>
 
-// A simple utility to convert a character to its Soundex code
 char getSoundexCode(char c) {
-    c = toupper(c);
-    switch (c) {
-        case 'B': case 'F': case 'P': case 'V': return '1';
-        case 'C': case 'G': case 'J': case 'K': case 'Q': case 'S': case 'X': case 'Z': return '2';
-        case 'D': case 'T': return '3';
-        case 'L': return '4';
-        case 'M': case 'N': return '5';
-        case 'R': return '6';
-        default: return '0'; // For A, E, I, O, U, H, W, Y
-    }
+    static const char soundexTable[26] = {
+        '0', '1', '2', '3', '0', '1', '2', '0', '0', '1', '2', '0', '5', '0', '0', '1', '0', '2', '0', '3', '0', '1', '0', '2', '0', '2'
+    };
+
+    c = toupper(c); // Convert character to uppercase
+    return (c >= 'A' && c <= 'Z') ? soundexTable[c - 'A'] : '0';
 }
 
 // Function to initialize the Soundex string with the first character
