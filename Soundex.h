@@ -4,7 +4,6 @@
 #include <ctype.h>
 #include <string.h>
 
-// A simple utility to convert a character to its Soundex code
 char getSoundexCode(char c) {
     static const char soundexTable[26] = {
         '0', '1', '2', '3', '0', '1', '2', '0', '0', '1', '2', '0', '5', '0', '0', '1', '0', '2', '0', '3', '0', '1', '0', '2', '0', '2'
@@ -14,19 +13,18 @@ char getSoundexCode(char c) {
     return (c >= 'A' && c <= 'Z') ? soundexTable[c - 'A'] : '0';
 }
 
-// Function to initialize the Soundex string with the first character
-void initializeSoundex(char *soundex, char initialChar) {
-    soundex[0] = toupper(initialChar);
-    for (int i = 1; i < 4; i++) {
-        soundex[i] = '0';
-    }
-    soundex[4] = '\0'; // Null-terminate the string
+// Initialization function
+void initializeSoundex(char *soundex, char firstChar) {
+    soundex[0] = toupper(firstChar);
+    memset(soundex + 1, '0', 3); // Set the rest of the soundex string to '0'
+    soundex[4] = '\0';
 }
 
-// Function to update Soundex code based on subsequent characters
-void updateSoundex(char *soundex, const char *name) {
-    int sIndex = 1; // Start after the initial character
-    for (int i = 1; name[i] != '\0' && sIndex < 4; i++) {
+// Processing function
+void processName(const char *name, char *soundex) {
+    int sIndex = 1;
+
+    for (int i = 1; name[i] && sIndex < 4; i++) {
         char code = getSoundexCode(name[i]);
         if (code != '0' && code != soundex[sIndex - 1]) {
             soundex[sIndex++] = code;
@@ -34,18 +32,11 @@ void updateSoundex(char *soundex, const char *name) {
     }
 }
 
-// Main function to generate the Soundex code from the given name
 void generateSoundex(const char *name, char *soundex) {
-    if (name == NULL || soundex == NULL) return;
+    if (name == NULL || soundex == NULL) return; // Handle NULL inputs
     
-    int len = strlen(name);
-    if (len == 0) {
-        initializeSoundex(soundex, ' '); // Empty name
-        return;
-    }
-    
-    initializeSoundex(soundex, name[0]); // Initialize with the first character
-    updateSoundex(soundex, name); // Update the Soundex code based on the rest of the name
+    initializeSoundex(soundex, name[0]);
+    processName(name, soundex);
 }
 
 #endif // SOUNDEX_H
