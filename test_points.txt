@@ -1,0 +1,44 @@
+
+
+==============================Template =======================================================================
+Test point number(TPx) : Test point name
+<short description>
+<test operation>
+<test procedure>
+<criteria for evaluation>
+
+TP1: Replacing lower case to upper case and encode
+Short description: Replace the lower case word to upper case word and encode
+Test operation: Applied soundex algorithm
+Test procedure: Pass the lower case word as input eg: "kashi"
+Criteria for evaluation: Replace the first character of word to upper and encode remaining characters  
+
+TP2: Pads with zero if input string/word is less than four characters
+Short description: If input string/word has less than four character then pads with zero upto four characters
+Test operation: Applied soundex algorithm
+Test procedure: Pass the less than four characters word as input eg: "kk"
+Criteria for evaluation: Filled with zero's for four character word
+
+TP3: Ignore duplicate characters and encode
+Short description: Verify that duplicate characters are ignored during encoding and only the first occurrence is considered.
+Test operation: Applied Soundex algorithm to a string with duplicate characters.
+Test procedure: Pass a string with all identical characters, e.g., "FFFF".
+Criteria for evaluation: The result should be based on the first character (F) and encoded as F100, ignoring the duplicate characters.
+
+TP4: Handle special characters during encoding
+Short description: Verify that special characters are treated as valid first characters, but the encoding for the rest of the string behaves as expected.
+Test operation: Applied Soundex algorithm to a string containing special characters.
+Test procedure: Pass a string with special characters, e.g., "@!%#" as input.
+Criteria for evaluation: The first character (@) should remain, and the remaining characters should be encoded as 000, indicating no numerical match for those characters.
+
+TP5: Replace alphabetic characters by numbers
+Short description: Verify that alphabetic characters in the string are encoded into corresponding numbers while keeping non-alphabetic characters intact.
+Test operation: Applied Soundex algorithm to a string with both numeric and alphabetic characters.
+Test procedure: Pass a string, e.g., "1ABC".
+Criteria for evaluation: The non-alphabetic character (1) should remain unchanged, and the alphabetic characters should be encoded as 1200.
+
+TP6: Truncate string to maximum code length and encode
+Short description: Verify that if the input string exceeds the maximum Soundex code length, the extra characters are ignored.
+Test operation: Applied Soundex algorithm to a long string exceeding the typical Soundex code length.
+Test procedure: Pass a long string, e.g., "abcdefefg", as input.
+Criteria for evaluation: The output should truncate the encoded result after 4 characters (A123), ignoring the rest of the characters after reaching the maximum length.
